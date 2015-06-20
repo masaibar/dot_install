@@ -29,8 +29,10 @@ public class DetailFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View detailView = inflater.inflate(R.layout.view_detail, container, false);
-//        return super.onCreateView(inflater, container, savedInstanceState);
         ((TextView) detailView.findViewById(R.id.detailText))
                 .setText(News.Details[getArguments().getInt("position")]);
+
+        return detailView;
     }
+
 }
