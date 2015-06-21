@@ -13,6 +13,8 @@ import android.widget.ListView;
  */
 public class TitlesFragment extends ListFragment{
 
+    private boolean isDualPane;
+
     public final static String EXTRA_POSITION = "jp.co.masaibar.myfragmentapp.POSITION";
     public TitlesFragment() {
     }
@@ -48,15 +50,21 @@ public class TitlesFragment extends ListFragment{
                 android.R.layout.simple_list_item_1,
                 News.Titles
         ));
+
+        View detailFrame = getActivity().findViewById(R.id.detailFrame);
+        isDualPane = detailFrame != null && detailFrame.getVisibility() == View.VISIBLE;
     }
 
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Intent intent = new Intent(getActivity(), SubActivity.class);
-        intent.putExtra(EXTRA_POSITION, position);
-        startActivity(intent);
-
+        if (isDualPane) {
+            listener.onTitleSelected(position);
+        } else {
+            Intent intent = new Intent(getActivity(), SubActivity.class);
+            intent.putExtra(EXTRA_POSITION, position);
+            startActivity(intent);
+        }
     }
 }
