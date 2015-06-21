@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements TitlesFragment.On
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.detailFrame, detailFragment)
+                .addToBackStack(null)
                 .commit();
     }
 }
