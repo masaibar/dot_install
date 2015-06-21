@@ -14,6 +14,7 @@ import android.widget.ListView;
 public class TitlesFragment extends ListFragment{
 
     private boolean isDualPane;
+    private int savedPosition;
 
     public final static String EXTRA_POSITION = "jp.co.masaibar.myfragmentapp.POSITION";
     public TitlesFragment() {
@@ -53,12 +54,27 @@ public class TitlesFragment extends ListFragment{
 
         View detailFrame = getActivity().findViewById(R.id.detailFrame);
         isDualPane = detailFrame != null && detailFrame.getVisibility() == View.VISIBLE;
+
+        if (isDualPane) {
+            if (savedInstanceState != null) {
+                savedPosition = savedInstanceState.getInt("saved_position");
+            } else {
+                savedPosition = 0;
+            }
+            listener.onTitleSelected(savedPosition);
+        }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("saved_position", savedPosition);
+    }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+        savedPosition = position;
         if (isDualPane) {
             listener.onTitleSelected(position);
         } else {
