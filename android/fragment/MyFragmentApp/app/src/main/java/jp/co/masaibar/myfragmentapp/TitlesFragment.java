@@ -1,5 +1,6 @@
 package jp.co.masaibar.myfragmentapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -14,6 +15,28 @@ public class TitlesFragment extends ListFragment{
 
     public final static String EXTRA_POSITION = "jp.co.masaibar.myfragmentapp.POSITION";
     public TitlesFragment() {
+    }
+
+    private OnTitleSelectedListener listener;
+
+    public interface OnTitleSelectedListener {
+        public void onTitleSelected(int position);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            listener = (OnTitleSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + "must implement onTitleSelected");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
     }
 
     @Override
